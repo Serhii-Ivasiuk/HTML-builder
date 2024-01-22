@@ -34,8 +34,10 @@ function writePromptsIntoFile(path) {
 
   rl.on('close', () => {
     writableStream.end();
-    writableStream.on('finish', () => console.log(`${FINISH_MSG}${path}`));
-    setTimeout(() => process.exit(0), 0);
+    writableStream.on('finish', () => {
+      console.log(`${FINISH_MSG}${path}`);
+      return rl.close();
+    });
   });
 }
 

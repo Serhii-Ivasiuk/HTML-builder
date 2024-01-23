@@ -12,13 +12,13 @@ async function printFilesInfoFromFolder(pathToFolder) {
       const isDir = file.isDirectory();
       if (isDir) continue;
 
-      const fileName = file.name.split('.')[0];
-      const fileExt = path.extname(file.name).replace('.', '');
+      const fileExt = path.extname(file.name) || 'no extension';
+      const fileName = path.basename(file.name, fileExt);
       const filePath = path.join(folderPath, file.name);
       const fileStats = await fs.stat(filePath);
       const fileSize = (fileStats.size / BYTES_IN_KB).toFixed(2);
 
-      console.log(`${fileName} - ${fileExt} - ${fileSize}kb`);
+      console.log(`${fileName} - ${fileExt.replace('.', '')} - ${fileSize}kb`);
     }
   } catch (err) {
     console.error(err.message);
